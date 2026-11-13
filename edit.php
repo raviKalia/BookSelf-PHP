@@ -11,6 +11,8 @@ $image = $book['image_url'];
 $link = $book['book_url'];
 $errors = [];
 
+// if the form is submitted, validate the input and update the book in the database.
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     checkToken();
     $title = field('title');
@@ -23,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         try {
             $query = $pdo->prepare('UPDATE books SET title = ?, author = ?, description = ?, image_url = ?, book_url = ? WHERE id = ?');
+            // Execute the prepared statement with the updated book details and the book ID to update the record in the database.
             $query->execute([$title, $author, $description, $image, $link, $id]);
             $_SESSION['message'] = 'Book saved successfully.';
             header('Location: admin.php');

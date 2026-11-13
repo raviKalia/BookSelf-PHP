@@ -6,6 +6,7 @@ $errors = [];
 
 // Visiting the page only shows confirmation. POST performs deletion.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Check CSRF: cross-site request forgery token before performing deletion. it helps prevent malicious requests from other sites.
     checkToken();
     try {
         $query = $pdo->prepare('DELETE FROM books WHERE id = ?');
